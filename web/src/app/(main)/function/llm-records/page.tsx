@@ -68,6 +68,7 @@ function tryFormatJSON(s: string): string {
 // 현재 상자 안의 텍스트를 복사하는 작은 버튼. 복사에 성공하면 잠시 체크 표시를 보여 준다. text 가 비어 있거나 자리표시자뿐이면 비활성화한다.
 function CopyButton({ text }: { text: string }) {
   const t = useTranslations("llmRecords");
+  const uiText = useTranslations("uiCommon");
   const [copied, setCopied] = React.useState(false);
   const timer = React.useRef<ReturnType<typeof setTimeout> | null>(null);
   React.useEffect(
@@ -120,6 +121,7 @@ const PAGE_SIZES = [25, 50, 100];
 
 export default function LLMRecordsPage() {
   const t = useTranslations("llmRecords");
+  const uiText = useTranslations("uiCommon");
   const tp = useTranslations("pagination");
   const [page, setPage] = React.useState(0);
   const [size, setSize] = React.useState(50);
@@ -307,7 +309,7 @@ export default function LLMRecordsPage() {
             className="h-8 pl-8"
           />
         </div>
-        <Input placeholder="Model" className="h-8 w-48" value={model} onChange={(e) => setModel(e.target.value)} />
+        <Input placeholder={uiText("model")} className="h-8 w-48" value={model} onChange={(e) => setModel(e.target.value)} />
         <Select value={pickedTask} onValueChange={setPickedTask}>
           <SelectTrigger size="sm" className="w-56">
             <SelectValue placeholder={t("taskPlaceholder")} />
@@ -409,11 +411,11 @@ export default function LLMRecordsPage() {
                 <TableRow>
                   <TableHead className="w-[130px]">{t("colTime")}</TableHead>
                   <TableHead className="w-[60px]">{t("colTask")}</TableHead>
-                  <TableHead className="w-[90px]">Worker</TableHead>
-                  <TableHead className="w-[100px]">Profile</TableHead>
-                  <TableHead className="w-[140px]">Model</TableHead>
+                  <TableHead className="w-[90px]">{uiText("worker")}</TableHead>
+                  <TableHead className="w-[100px]">{uiText("profile")}</TableHead>
+                  <TableHead className="w-[140px]">{uiText("model")}</TableHead>
                   <TableHead className="w-[70px]">{t("colLatency")}</TableHead>
-                  <TableHead className="w-[90px]">Tokens</TableHead>
+                  <TableHead className="w-[90px]">{uiText("tokens")}</TableHead>
                   <TableHead className="w-[60px]">{t("colStatus")}</TableHead>
                 </TableRow>
               </TableHeader>
@@ -601,3 +603,5 @@ export default function LLMRecordsPage() {
     </div>
   );
 }
+
+// 2026-11-05: Localize visible headings, placeholders and field labels from the UI walkthrough; identifiers and submitted values are preserved.

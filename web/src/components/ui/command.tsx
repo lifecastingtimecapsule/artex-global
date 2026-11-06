@@ -1,5 +1,7 @@
 "use client"
 
+import { useTranslations } from "next-intl";
+
 import * as React from "react"
 import { Command as CommandPrimitive } from "cmdk"
 
@@ -34,8 +36,8 @@ function Command({
 }
 
 function CommandDialog({
-  title = "Command Palette",
-  description = "Search for a command to run...",
+  title,
+  description,
   children,
   className,
   showCloseButton = false,
@@ -46,11 +48,12 @@ function CommandDialog({
   className?: string
   showCloseButton?: boolean
 }) {
+  const uiText = useTranslations("uiCommon");
   return (
     <Dialog {...props}>
       <DialogHeader className="sr-only">
-        <DialogTitle>{title}</DialogTitle>
-        <DialogDescription>{description}</DialogDescription>
+        <DialogTitle>{title ?? uiText("commandTitle")}</DialogTitle>
+        <DialogDescription>{description ?? uiText("commandDescription")}</DialogDescription>
       </DialogHeader>
       <DialogContent
         className={cn(
@@ -92,8 +95,11 @@ function CommandList({
   className,
   ...props
 }: React.ComponentProps<typeof CommandPrimitive.List>) {
+  const uiText = useTranslations("uiCommon");
   return (
     <CommandPrimitive.List
+      label={uiText("suggestions")}
+      aria-label={uiText("suggestions")}
       data-slot="command-list"
       className={cn(
         "no-scrollbar max-h-72 scroll-py-1 overflow-x-hidden overflow-y-auto outline-none",
@@ -193,3 +199,7 @@ export {
   CommandShortcut,
   CommandSeparator,
 }
+
+// 2026-11-05: Localize shared navigation and close labels found during actual UI review; preserve interaction behavior.
+
+// 2026-11-05: Set cmdk List.label as defined by the installed package; its hidden label otherwise takes precedence over aria-label.

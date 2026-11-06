@@ -1,5 +1,7 @@
 "use client";
 
+import { useReviewedDisplayLabels } from "@/lib/ui-review-i18n";
+
 import * as React from "react";
 
 import {
@@ -61,6 +63,7 @@ const TRAFFIC_TOOL_KEYS = new Set(["traffic_search", "traffic_get"]);
 export function AgentEditor({ agentKey, onSaved }: { agentKey: string; onSaved?: () => void }) {
   const tr = useTranslations("agentEditor");
   const agentLabels = useAgentLabels();
+  const displayLabels = useReviewedDisplayLabels();
   const [detail, setDetail] = React.useState<AgentDetail | null>(null);
   const [versions, setVersions] = React.useState<PromptVersion[]>([]);
   const [variables, setVariables] = React.useState<PromptVar[]>([]);
@@ -323,8 +326,8 @@ export function AgentEditor({ agentKey, onSaved }: { agentKey: string; onSaved?:
         <TabsTrigger value="prompt">{tr("tab.prompt")}</TabsTrigger>
         <TabsTrigger value="wrapup">{tr("tab.wrapup")}</TabsTrigger>
         <TabsTrigger value="mcp">MCP</TabsTrigger>
-        <TabsTrigger value="skill">Skill</TabsTrigger>
-        <TabsTrigger value="tools">Tools</TabsTrigger>
+        <TabsTrigger value="skill">{tr("skillTab")}</TabsTrigger>
+        <TabsTrigger value="tools">{tr("toolsTab")}</TabsTrigger>
         {isCustom && <TabsTrigger value="triggers">{tr("tab.triggers")}</TabsTrigger>}
       </TabsList>
 
@@ -759,7 +762,7 @@ export function AgentEditor({ agentKey, onSaved }: { agentKey: string; onSaved?:
             <label key={s.name} className="flex items-center gap-2 rounded-md border p-2 text-sm">
               <Checkbox checked={skillVisible.includes(s.name)} onCheckedChange={() => toggleSkill(s.name)} />
               <span className="font-mono text-xs">{s.name}</span>
-              {s.description && <span className="text-muted-foreground ml-auto truncate text-xs">{s.description}</span>}
+              {s.description && <span className="text-muted-foreground ml-auto truncate text-xs">{displayLabels.skillDescription(s.name, s.description)}</span>}
             </label>
           ))}
           {skills.length === 0 && <span className="text-muted-foreground text-xs">{tr("skill.none")}</span>}
@@ -799,7 +802,7 @@ export function AgentEditor({ agentKey, onSaved }: { agentKey: string; onSaved?:
                 ) : (
                   t.description && (
                     <span className="text-muted-foreground ml-auto line-clamp-1 max-w-[55%] text-xs">
-                      {t.description}
+                      {displayLabels.toolDescription(t.key, t.description)}
                     </span>
                   )
                 )}
@@ -879,6 +882,7 @@ function DiffView({ oldText, newText }: { oldText: string; newText: string }) {
 // in parallel with the base user message + auto context appended by the backend.
 function AgentTriggersTab({ agentKey, agent }: { agentKey: string; agent?: Agent }) {
   const tr = useTranslations("agentEditor");
+  const displayLabels = useReviewedDisplayLabels();
   const [triggers, setTriggers] = React.useState<AgentTrigger[]>([]);
   const [tools, setTools] = React.useState<Tool[]>([]);
   // 触发后处理策略(每 agent);初值来自 agent detail,改动即保存。
@@ -1263,7 +1267,7 @@ function AgentTriggersTab({ agentKey, agent }: { agentKey: string; agent?: Agent
                       <span className="min-w-0">
                         <span className="font-medium">{tool.key}</span>
                         {tool.description && (
-                          <span className="text-muted-foreground line-clamp-1"> {tool.description}</span>
+                          <span className="text-muted-foreground line-clamp-1"> {displayLabels.toolDescription(tool.key, tool.description)}</span>
                         )}
                       </span>
                     </label>
@@ -1386,3 +1390,5 @@ function AgentTriggersTab({ agentKey, agent }: { agentKey: string; agent?: Agent
     </div>
   );
 }
+
+// 2026-11-05: Translate assignment summaries and tabs for people; stored model prompts and save operations retain their original contents.

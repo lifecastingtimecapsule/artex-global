@@ -1,5 +1,7 @@
 "use client";
 
+import { useReviewedDisplayLabels } from "@/lib/ui-review-i18n";
+
 import * as React from "react";
 
 import { BotIcon, ListFilterIcon, PencilIcon, PlusIcon, ShieldAlertIcon, Trash2Icon } from "lucide-react";
@@ -50,6 +52,7 @@ function JudgeStat({ label, value }: { label: string; value: string }) {
 // JudgeSparkbars 는 최근 N일 일별 소비(입력+출력)를 차트 라이브러리 없이 div 로 그린 미니 막대 차트다.
 function JudgeSparkbars({ daily }: { daily: JudgeDayUsage[] }) {
   const t = useTranslations("interceptPage");
+  const displayLabels = useReviewedDisplayLabels();
   const max = Math.max(1, ...daily.map((d) => d.input_tokens + d.output_tokens));
   return (
     <div className="flex h-16 items-end gap-0.5">
@@ -155,6 +158,7 @@ const defaultJudge = (): JudgeConfig => ({
 
 function JudgeCard() {
   const t = useTranslations("interceptPage");
+  const displayLabels = useReviewedDisplayLabels();
   const [cfg, setCfg] = React.useState<JudgeConfig>(defaultJudge());
   const [profiles, setProfiles] = React.useState<LLMProfile[]>([]);
   const [loading, setLoading] = React.useState(true);
@@ -411,6 +415,7 @@ function JudgeCard() {
 
 export default function InterceptPage() {
   const t = useTranslations("interceptPage");
+  const displayLabels = useReviewedDisplayLabels();
   const [rules, setRules] = React.useState<InterceptRule[]>([]);
   const [loading, setLoading] = React.useState(true);
   const [open, setOpen] = React.useState(false);
@@ -716,7 +721,7 @@ export default function InterceptPage() {
                         <TableCell>
                           <span className="font-mono text-xs tabular-nums">{rule.priority}</span>
                         </TableCell>
-                        <TableCell className="font-medium text-sm">{rule.name}</TableCell>
+                        <TableCell className="font-medium text-sm">{displayLabels.ruleName(rule.name)}</TableCell>
                         <TableCell>
                           <span className="text-xs text-muted-foreground">
                             {rule.match_target === "tool_name" ? t("target.tool_name") : t("target.tool_input")}
@@ -994,3 +999,5 @@ export default function InterceptPage() {
     </div>
   );
 }
+
+// 2026-11-05: Format only seeded rule display names; matching patterns, enabled state and decisions are unchanged.

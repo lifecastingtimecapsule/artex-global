@@ -1126,7 +1126,9 @@
         "toolsNone": "（未選択）",
         "message": "メッセージ: {msg}"
       }
-    }
+    },
+    "skillTab": "スキル",
+    "toolsTab": "ツール"
   },
   "assetSearch": {
     "placeholder": "DSL 検索: domain=example AND status_code>=400",
@@ -1891,7 +1893,9 @@
     "descLabel": "説明",
     "descPlaceholder": "このエージェントが何をするかを一文で説明します",
     "create": "作成",
-    "editorDescFallback": "プロンプト・設定・公開リソース・ツール連携"
+    "editorDescFallback": "プロンプト・設定・公開リソース・ツール連携",
+    "skillLabel": "スキル",
+    "keyLabel": "識別キー"
   },
   "logsPage": {
     "title": "システムログ",
@@ -1978,7 +1982,7 @@
     "bindAgentShort": "エージェント連携",
     "noAgents": "(エージェントなし)",
     "enabled": "有効",
-    "descLabel": "ツールの説明 (モデルに渡されます)",
+    "descLabel": "AI向けのツール説明（原文・モデルに渡されます）",
     "paramsLabel": "パラメーター (名前 / 型 / 必須かどうかは読み取り専用、説明と既定値は編集可能)",
     "noParams": "(パラメーターなし)",
     "required": "必須",
@@ -2015,8 +2019,8 @@
     "cmdTemplateLabel": "コマンドテンプレート(プレースホルダー '{param}'、例: nmap -p '{ports}' '{target}')",
     "scriptLabel": "Python 本体(パラメーターは stdin の JSON または os.environ[\"TOOL_X\"] で渡されます)",
     "httpUrlLabel": "URL('{param}' を含められます)",
-    "httpHeadersLabel": "Headers(JSON、'{param}' を含められます)",
-    "httpBodyLabel": "Body('{param}' を含められます)",
+    "httpHeadersLabel": "ヘッダー(JSON、'{param}' を含められます)",
+    "httpBodyLabel": "本文('{param}' を含められます)",
     "proxyLabel": "プロキシ URL(空にすると直接接続)",
     "useRecordingProxy": "記録プロキシを使用",
     "timeoutLabel": "タイムアウト(ms、空にすると既定値)",
@@ -2127,11 +2131,12 @@
     "mcpSheetHint": "スキルをロードしたときだけ、選択した MCP のツールが公開・ロック解除されます。",
     "visSheetHint": "選択したエージェントは、作成直後からこのスキルを参照できます。",
     "creating": "作成中…",
-    "create": "作成"
+    "create": "作成",
+    "licenseLabel": "ライセンス"
   },
   "changePasswordDialog": {
     "title": "パスワード変更",
-    "description": "ユーザー名は <b>ARTEX</b> に固定されています。まず現在のパスワードを入力して認証する必要があります。パスワードを変更しても、すでに発行されたログイン Token は有効期限が切れるまで有効です。",
+    "description": "ユーザー名は <b>ARTEX</b> に固定されています。まず現在のパスワードを入力して認証する必要があります。変更後は、もう一度ログインしてください。",
     "currentPassword": "現在のパスワード",
     "newPassword": "新しいパスワード",
     "confirmPassword": "新しいパスワードの確認",
@@ -2205,7 +2210,7 @@
   },
   "llmRecords": {
     "title": "LLM 履歴",
-    "searchPlaceholder": "Session ID を検索…",
+    "searchPlaceholder": "セッションIDを検索…",
     "taskPlaceholder": "タスクを選択…",
     "taskEmpty": "タスク履歴がありません",
     "deleteTaskConversations": "タスクの会話を削除",
@@ -3154,12 +3159,12 @@
       "deepseekDesc1": "このソースは<b>現在有効な LLM 設定</b>をそのまま再利用します。そのため<b>DeepSeek 公式モデルのみ対応</b>し、その設定は<b>必ず anthropic プロトコルを使用</b>する必要があります。DeepSeek の OpenAI プロトコルのエンドポイントはサーバー側検索に対応していません。LLM 設定を変更すると、このソースが動作しなくなる場合があります。",
       "deepseekDesc2": "他のソースと異なり、検索は<b>DeepSeek のサーバーが実行</b>します。検索のたびにモデル呼び出しが 1 回余分に消費され (トークンコストが発生)、検索リクエストは<b>上の出口プロキシを経由せず</b>、<b>トラフィック記録にも含まれません</b>。返される結果には<b>タイトルとリンクのみ</b>が含まれ (要約なし)、本文が必要な場合は WebFetch が取得します。",
       "deepseekDesc3": "上記の条件を満たしているかどうかはご自身で確認する必要があり、システムはブロックしません。下の「検索テスト」ボタンで実際に 1 回実行して確認できます。",
-      "braveKeyLabel": "Brave Search API Key",
+      "braveKeyLabel": "Brave検索のAPIキー",
       "braveKeyPlaceholderSet": "設定済み (空にすると維持)",
       "braveKeyPlaceholderUnset": "Brave API Key を入力",
       "braveNeedsKey": "Brave を選択しましたが、まだ Key が設定されていません。Key を保存するまで検索ツールはオンになりません。",
       "braveQuota": "無料版の利用枠は月約 2,000 回です。https://brave.com/search/api/ で Key を発行してください。",
-      "tavilyKeyLabel": "Tavily Search API Key",
+      "tavilyKeyLabel": "Tavily検索のAPIキー",
       "tavilyKeyPlaceholderSet": "設定済み (空にすると維持)",
       "tavilyKeyPlaceholderUnset": "Tavily API Key を入力 (tvly-…)",
       "tavilyNeedsKey": "Tavily を選択しましたが、まだ Key が設定されていません。Key を保存するまで検索ツールはオンになりません。",
@@ -3331,7 +3336,7 @@
         "loadTitle": "API から利用可能なモデルを読み込む"
       },
       "baseUrl": {
-        "label": "Base URL (任意)"
+        "label": "APIの接続先URL (任意)"
       },
       "proxy": {
         "label": "プロキシ (任意)",
@@ -3749,7 +3754,7 @@
       }
     },
     "auto": {
-      "name": "Auto",
+      "name": "自動運用",
       "description": "プラットフォーム運用アシスタント: ツールで案件(作成・参照・一時停止・ヒント付与)と資産を管理し、skill・カスタムツール・MCP を作成または変更します。"
     },
     "pentest": {
@@ -3759,6 +3764,77 @@
     "retester": {
       "name": "脆弱性の再検証",
       "description": "脆弱性の詳細から手動で開始し、元の証拠を読み取って、独立した再検証の結論を保存します。"
+    },
+    "reporter": {
+      "name": "報告書作成",
+      "description": "登録された脆弱性の証拠と実行履歴を確認し、詳細なMarkdown報告書を作成して保存します。"
     }
+  },
+  "layoutPreferences": {
+    "title": "表示設定",
+    "description": "ダッシュボードの見た目とレイアウトを変更できます。",
+    "themePreset": "テーマの配色",
+    "presetPlaceholder": "配色を選択",
+    "fonts": "フォント",
+    "fontPlaceholder": "フォントを選択",
+    "themeMode": "表示モード",
+    "light": "ライト",
+    "dark": "ダーク",
+    "system": "端末に従う",
+    "pageLayout": "ページの幅",
+    "centered": "中央寄せ",
+    "fullWidth": "横幅いっぱい",
+    "navbarBehavior": "上部バーの動き",
+    "sticky": "上部に固定",
+    "scroll": "一緒にスクロール",
+    "sidebarStyle": "サイドバーの表示",
+    "inset": "内側に配置",
+    "sidebar": "通常",
+    "floating": "浮かせる",
+    "sidebarCollapseMode": "サイドバーを閉じたとき",
+    "icon": "アイコンのみ",
+    "offcanvas": "完全に隠す",
+    "restoreDefaults": "初期設定に戻す",
+    "presets": {
+      "default": "標準",
+      "brutalist": "ブロック調",
+      "soft-pop": "ソフトポップ",
+      "tangerine": "オレンジ"
+    }
+  },
+  "uiCommon": {
+    "close": "閉じる",
+    "commandTitle": "画面を検索",
+    "commandDescription": "移動先の画面を検索して選択してください。",
+    "suggestions": "検索候補",
+    "toggleSidebar": "サイドバーを開閉",
+    "themeCycle": "現在の表示：{mode}。クリックで切り替え",
+    "themeModes": {
+      "light": "ライト",
+      "dark": "ダーク",
+      "system": "端末に従う"
+    },
+    "pagination": "ページ切り替え",
+    "previous": "前へ",
+    "next": "次へ",
+    "previousPage": "前のページへ",
+    "nextPage": "次のページへ",
+    "morePages": "ほかのページ",
+    "originalDefinition": "AI向けの定義（原文）",
+    "localizedSummary": "日本語での概要",
+    "license": "ライセンス",
+    "worker": "実行担当",
+    "profile": "接続設定",
+    "model": "モデル",
+    "tokens": "トークン数",
+    "host": "ホスト",
+    "contentType": "コンテンツの種類",
+    "hostPlaceholder": "ホスト名…",
+    "key": "識別キー",
+    "method": "HTTPメソッド",
+    "compatibility": "動作要件",
+    "info": "情報",
+    "warn": "警告",
+    "error": "エラー"
   }
 }

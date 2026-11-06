@@ -49,6 +49,8 @@ import { AssetInterceptRulesEditor } from "@/components/asset-intercept-rules-ed
 import { StatusBadge } from "@/components/status-badge";
 import { TablePagination } from "@/components/table-pagination";
 import { TaskLLMProfileChain } from "@/components/task-llm-profile-chain";
+// 2026-11-05: Add explicit file/folder, public repository and bounded Web inputs.
+import { TaskSourceInputs } from "@/components/task-source-inputs";
 import { TaskTemplateControls } from "@/components/task-template-controls";
 import {
   AlertDialog,
@@ -3167,7 +3169,6 @@ function CreateTaskSheet({
   const [uploading, setUploading] = React.useState(false);
   const [uploadCount, setUploadCount] = React.useState(0);
   const draftIdRef = React.useRef<string>("");
-  const fileInputRef = React.useRef<HTMLInputElement>(null);
   const sheetContentRef = React.useRef<HTMLDivElement>(null);
 
   // load LLM profiles once for the create-task profile picker.
@@ -3184,7 +3185,13 @@ function CreateTaskSheet({
 
   // pickFiles uploads the chosen files into this draft's staging dir and appends their
   // absolute paths to the description; the task's agents open them by path via Read/Bash.
-  async function pickFiles(files: FileList | null) {
+  // 2026-11-05: Share one draft identifier across file/folder and GitHub imports.
+  function getSourceDraftID() {
+    if (!draftIdRef.current) draftIdRef.current = globalThis.crypto?.randomUUID?.() ?? `d${Date.now().toString(36)}${Math.random().toString(36).slice(2, 10)}`;
+    return draftIdRef.current;
+  }
+
+  async function pickFiles(files: File[], preservePaths = false) {
     if (!files || files.length === 0) return;
     // crypto.randomUUID 仅在安全上下文可用(https/localhost);经 IP+http 访问时降级。
     if (!draftIdRef.current) {
@@ -3193,14 +3200,14 @@ function CreateTaskSheet({
     }
     setUploading(true);
     try {
-      const r = await api.chatUpload("staging", draftIdRef.current, Array.from(files));
+      const r = await api.chatUpload("staging", getSourceDraftID(), files, preservePaths);
       setDescription((prev) => appendUploads(prev, r.attachments, t));
       setUploadCount((n) => n + r.attachments.length);
     } catch (e) {
       toast.error(t("upload.failed", { msg: (e as Error).message }));
+      throw e;
     } finally {
       setUploading(false);
-      if (fileInputRef.current) fileInputRef.current.value = ""; // allow re-picking the same file
     }
   }
 
@@ -3324,29 +3331,18 @@ function CreateTaskSheet({
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
               />
-              {/* 上传文件(可多选):暂存到 drafts/,把绝对路径追加进上方描述,worker 据此 Read/Bash 打开。 */}
-              <div className="flex flex-wrap items-center gap-2">
-                <input
-                  ref={fileInputRef}
-                  type="file"
-                  multiple
-                  className="hidden"
-                  onChange={(e) => void pickFiles(e.target.files)}
-                />
-                <Button
-                  type="button"
-                  variant="outline"
-                  size="sm"
-                  onClick={() => fileInputRef.current?.click()}
-                  disabled={uploading}
-                >
-                  {uploading ? <Loader2Icon className="animate-spin" /> : <PaperclipIcon />}
-                  {t("create.uploadButton")}
-                </Button>
-                <span className="text-muted-foreground text-xs">
-                  {uploadCount > 0 ? t("create.uploadDone", { count: uploadCount }) : t("create.uploadIdle")}
-                </span>
-              </div>
+              <TaskSourceInputs
+                busy={uploading || creating}
+                onBusy={setUploading}
+                onPick={pickFiles}
+                getDraftID={getSourceDraftID}
+                onAttachments={(attachments) => {
+                  setDescription((previous) => appendUploads(previous, attachments, t));
+                  setUploadCount((previous) => previous + attachments.length);
+                }}
+                onReference={(reference) => setDescription((previous) => `${previous.trimEnd()}\n\n${reference}\n`)}
+              />
+              {uploadCount > 0 && <span className="text-xs text-muted-foreground">{t("create.uploadDone", { count: uploadCount })}</span>}
             </div>
             <div className="grid gap-2">
               <Label htmlFor="goal">{t("create.goalLabel")}</Label>

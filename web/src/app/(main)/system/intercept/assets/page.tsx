@@ -1,5 +1,7 @@
 "use client";
 
+import { useReviewedDisplayLabels } from "@/lib/ui-review-i18n";
+
 import * as React from "react";
 
 import { BanIcon, PencilIcon, PlusIcon, Trash2Icon } from "lucide-react";
@@ -92,6 +94,7 @@ function frontValidate(form: RuleForm): "contentRequired" | "cidrInvalid" | null
 
 export default function AssetInterceptPage() {
   const t = useTranslations("assetInterceptPage");
+  const displayLabels = useReviewedDisplayLabels();
   const tr = useTranslations("assetInterceptRules");
   const [rules, setRules] = React.useState<AssetInterceptRule[]>([]);
   const [loading, setLoading] = React.useState(true);
@@ -238,7 +241,7 @@ export default function AssetInterceptPage() {
                             {t("builtin")}
                           </Badge>
                         )}
-                        <span className="truncate">{rule.note}</span>
+                        <span className="truncate">{displayLabels.ruleName(rule.note)}</span>
                       </div>
                     </TableCell>
                     <TableCell className="text-center">
@@ -348,3 +351,5 @@ export default function AssetInterceptPage() {
     </div>
   );
 }
+
+// 2026-11-05: Format only seeded rule display names; matching patterns, enabled state and decisions are unchanged.

@@ -1030,6 +1030,10 @@ type intentItem struct {
 // 节点（不能挂在别的意图/目标/提示上）。顶层全新方向留空 parent_ids，兜底连 origin fact。
 // 这样"每个意图都连到 fact 节点、且是发现驱动而非凭空规划"从创建路径上被强制。
 func (t *ToolSet) addOneIntent(it intentItem) (int64, error) {
+	// 2026-11-06: Reuse an existing exact planner intent instead of scheduling duplicate work.
+	if existing, duplicateErr := t.duplicatePlannerIntent(it); duplicateErr != nil || existing != 0 {
+		return existing, duplicateErr
+	}
 	if strings.TrimSpace(it.Summary) == "" {
 		return 0, fmt.Errorf("summary 不能为空")
 	}

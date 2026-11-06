@@ -107,6 +107,8 @@ func retryableWorkerModelError(reason harness.TerminalReason, err error) bool {
 // (re)installed at runtime (LLM configured from the UI); the loops always run
 // but idle until an LLM is set.
 type Engine struct {
+	// 2026-11-06: Task-local no-progress detection without additional LLM calls.
+	loopGuards sync.Map
 	m        *Manager
 	debounce time.Duration
 
@@ -296,6 +298,7 @@ func (e *Engine) StopTask(taskID string) {
 	e.paused.Delete(taskID)
 	e.dropCnt.Delete(taskID)
 	e.plannerRound.Delete(taskID)
+	e.loopGuards.Delete(taskID)
 	e.settling.Delete(taskID)
 	e.deadline.Delete(taskID)
 	e.stamped.Delete(taskID)
@@ -332,6 +335,7 @@ func (e *Engine) Resume(t *Task) {
 		return
 	}
 	e.paused.Delete(t.ID)
+	e.loopGuards.Delete(t.ID) // 2026-11-06: Human resume resets the observation window.
 	t.Notify()
 }
 
@@ -673,6 +677,11 @@ const (
 )
 
 func (e *Engine) emitActivity(t *Task, r db.Activity) db.Activity {
+	// 2026-11-06: Structured human-input requests activate the real pause barrier.
+	if r.Tool == "wait_for_user" && r.Kind == "text" && r.Worker != "system" {
+		e.pauseForLoopGuard(t, r.Summary)
+	}
+	e.loopGuard(t.ID).record(r)
 	id, err := e.appendActivity(t, r)
 	if err != nil {
 		// NO LONGER SILENT: dropping a record breaks command↔result pairing in the
@@ -890,6 +899,11 @@ func (e *Engine) plannerLoop(ctx context.Context, t *Task) {
 				}
 			}
 			return // goalless 分支永不进入 planner.Plan
+		}
+		// 2026-11-06: Bookkeeping alone must not sustain automatic replanning.
+		if active, guardErr := t.Store.HasActiveIntent(); guardErr == nil && e.loopGuard(t.ID).shouldPause(active) {
+			e.pauseForLoopGuard(t, "実作業の新しい結果がない計画が3回続いたため、次のAI呼び出し前に停止しました。")
+			return
 		}
 		if !e.beginTaskOperation(t.ID) {
 			return

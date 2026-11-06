@@ -15,7 +15,7 @@ import type { Agent } from "@/lib/types";
 // retester 는 DB 에 builtin=false 로 시드되지만(server FindingRetestAgentKey) 시스템이
 // 심은 고정 key 라 번역 대상에 포함한다. builtin=true 인 에이전트(goals/planner/
 // mainagent/worker/auto/pentest)는 agent.builtin 으로 걸러지므로 여기 둘 필요가 없다.
-const SYSTEM_SEEDED_AGENT_KEYS = new Set(["retester"]);
+const SYSTEM_SEEDED_AGENT_KEYS = new Set(["retester", "reporter"]);
 
 function isSystemSeeded(agent: { key: string; builtin?: boolean }): boolean {
   return !!agent.builtin || SYSTEM_SEEDED_AGENT_KEYS.has(agent.key);
@@ -100,3 +100,5 @@ export function useAgentNameByKey(): (key: string) => string {
   }, []);
   return useCallback((key: string) => labels.nameByKey(key, (k) => agents.get(k)), [labels, agents]);
 }
+
+// 2026-11-05: Include the system-seeded reporter in display translations; agent keys and stored prompts are unchanged.

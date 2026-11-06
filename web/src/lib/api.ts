@@ -898,7 +898,11 @@ export const api = {
     post<{ reply: string; mode: string }>(`/chat${tq(task)}`, { message, attachments, seg }),
   chatStatus: (taskId: string) => get<{ running: boolean }>(`/tasks/${taskId}/chat/status`),
   // 方式1 文件上传:落到会话/任务工作目录 uploads/，返回可供 agent Read 的相对路径。
-  chatUpload: async (scope: "task" | "session" | "staging", id: string, files: File[]) => {
+  // 2026-11-05: Public GitHub acquisition records an immutable revision without executing source.
+  importGithubSource: (input: { url: string; ref: string; subpath: string; draft_id: string }) =>
+    post<{ attachments: ChatAttachment[]; commit: string; skipped: number; bytes: number }>("/task-sources/github", input),
+  // 2026-11-05: Preserve relative folder paths explicitly; ordinary attachments retain existing behavior.
+  chatUpload: async (scope: "task" | "session" | "staging", id: string, files: File[], preservePaths = false) => {
     if (MOCK)
       return {
         attachments: files.map((f) => ({
@@ -909,7 +913,10 @@ export const api = {
         })),
       };
     const fd = new FormData();
-    for (const f of files) fd.append("file", f);
+    for (const f of files) {
+      fd.append("file", f);
+      if (preservePaths) fd.append("relative_path", f.webkitRelativePath || f.name);
+    }
     const token = getToken();
     const r = await fetch(`/api/chat/upload?scope=${scope}&id=${encodeURIComponent(id)}`, {
       method: "POST",

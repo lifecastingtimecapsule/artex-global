@@ -1,5 +1,9 @@
 "use client";
 
+import { useReviewedDisplayLabels } from "@/lib/ui-review-i18n";
+
+import { useAgentLabels } from "@/lib/agent-i18n";
+
 import * as React from "react";
 
 import { PlayIcon, PlusIcon, RotateCcwIcon, SaveIcon, SearchIcon, Trash2Icon } from "lucide-react";
@@ -141,6 +145,9 @@ function ToolEditor({
   onClose: () => void;
 }) {
   const t = useTranslations("toolsPage");
+  const uiText = useTranslations("uiCommon");
+  const agentLabels = useAgentLabels();
+  const displayLabels = useReviewedDisplayLabels();
   // traffic tools can't be bound/enabled until the global 流量捕获 switch is on.
   const trafficGated = TRAFFIC_TOOL_KEYS.has(tool.key) && !captureOn;
   const [description, setDescription] = React.useState(tool.description);
@@ -202,7 +209,7 @@ function ToolEditor({
                     disabled={trafficGated}
                     onCheckedChange={() => toggleAgent(ag.key)}
                   />
-                  {ag.name}
+                  {agentLabels.name(ag)}
                   <span className="text-muted-foreground font-mono text-xs">{ag.key}</span>
                 </label>
               ))}
@@ -218,6 +225,7 @@ function ToolEditor({
         </div>
 
         {/* description */}
+        <p className="text-sm text-muted-foreground">{displayLabels.toolDescription(tool.key, tool.description)}</p>
         <div className="grid gap-1.5">
           <Label className="text-muted-foreground text-xs">{t("descLabel")}</Label>
           <Textarea
@@ -293,6 +301,9 @@ function ToolEditor({
 // ToolGridCard is one clickable tile in the catalog grid.
 function ToolGridCard({ tool, onClick }: { tool: Tool; onClick: () => void }) {
   const t = useTranslations("toolsPage");
+  const uiText = useTranslations("uiCommon");
+  const agentLabels = useAgentLabels();
+  const displayLabels = useReviewedDisplayLabels();
   return (
     <button
       type="button"
@@ -328,12 +339,12 @@ function ToolGridCard({ tool, onClick }: { tool: Tool; onClick: () => void }) {
           {t("callsBadge", { count: tool.calls ?? 0 })}
         </Badge>
       </div>
-      <p className="text-muted-foreground line-clamp-1 h-4 text-xs">{tool.description || t("noDescription")}</p>
+      <p className="text-muted-foreground line-clamp-1 h-4 text-xs">{displayLabels.toolDescription(tool.key, tool.description) || t("noDescription")}</p>
       <div className="mt-auto flex flex-wrap gap-1 pt-1">
         {tool.agents.length === 0 && <span className="text-muted-foreground text-[10px]">{t("noBoundAgents")}</span>}
         {tool.agents.map((a) => (
           <Badge key={a} variant="outline" className="px-1.5 py-0 text-[10px]">
-            {a}
+            {displayLabels.agentKey(a)}
           </Badge>
         ))}
       </div>
@@ -343,6 +354,9 @@ function ToolGridCard({ tool, onClick }: { tool: Tool; onClick: () => void }) {
 
 export default function ToolsPage() {
   const t = useTranslations("toolsPage");
+  const uiText = useTranslations("uiCommon");
+  const agentLabels = useAgentLabels();
+  const displayLabels = useReviewedDisplayLabels();
   const [tools, setTools] = React.useState<Tool[]>([]);
   const [agents, setAgents] = React.useState<Agent[]>([]);
   const [captureOn, setCaptureOn] = React.useState(false);
@@ -381,10 +395,11 @@ export default function ToolsPage() {
       return (
         t.key.toLowerCase().includes(q) ||
         t.description.toLowerCase().includes(q) ||
+        displayLabels.toolDescription(t.key, t.description).toLowerCase().includes(q) ||
         t.agents.some((a) => a.toLowerCase().includes(q))
       );
     },
-    [query],
+    [query, displayLabels],
   );
   const systemTools = tools.filter((t) => t.system && matchTool(t));
   const customTools = tools.filter((t) => !t.system && matchTool(t));
@@ -537,6 +552,9 @@ function CustomToolDialog({
   onSaved: () => void;
 }) {
   const t = useTranslations("toolsPage");
+  const uiText = useTranslations("uiCommon");
+  const agentLabels = useAgentLabels();
+  const displayLabels = useReviewedDisplayLabels();
   const isNew = edit === "new";
   const tool = edit && edit !== "new" ? edit : null;
   const [key, setKey] = React.useState("");
@@ -744,7 +762,7 @@ function CustomToolDialog({
 
         <div className="flex min-h-0 flex-1 flex-col gap-4 overflow-y-auto px-4 pb-4">
           <div className="grid gap-1.5">
-            <Label className="text-xs">Key</Label>
+            <Label className="text-xs">{uiText("key")}</Label>
             <Input
               className="font-mono"
               placeholder={t("keyPlaceholder")}
@@ -801,7 +819,7 @@ function CustomToolDialog({
             <div className="grid gap-2">
               <div className="flex gap-2">
                 <div className="grid gap-1.5">
-                  <Label className="text-xs">Method</Label>
+                  <Label className="text-xs">{uiText("method")}</Label>
                   <Input
                     className="w-24"
                     value={ex.method}
@@ -892,7 +910,7 @@ function CustomToolDialog({
               {agents.map((a) => (
                 <label key={a.key} className="flex items-center gap-2 text-sm">
                   <Checkbox checked={bound.includes(a.key)} onCheckedChange={() => toggleAgent(a.key)} />
-                  {a.name}
+                  {agentLabels.name(a)}
                   <span className="text-muted-foreground font-mono text-xs">{a.key}</span>
                 </label>
               ))}
@@ -954,3 +972,7 @@ function CustomToolDialog({
     </Sheet>
   );
 }
+
+// 2026-11-05: Translate seeded display names and catalog summaries found by clicking the live UI; save handlers and model definitions remain unchanged.
+
+// 2026-11-05: Localize visible headings, placeholders and field labels from the UI walkthrough; identifiers and submitted values are preserved.

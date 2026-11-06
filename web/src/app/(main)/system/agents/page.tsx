@@ -80,7 +80,7 @@ function AgentGridCard({ agent, onOpen, onDeleted }: { agent: Agent; onOpen: () 
         </p>
         <div className="text-muted-foreground flex flex-wrap gap-1.5 text-[10px]">
           <span className="rounded border px-1.5 py-0.5">MCP {agent.mcp_count ?? 0}</span>
-          <span className="rounded border px-1.5 py-0.5">Skill {agent.skill_count ?? 0}</span>
+          <span className="rounded border px-1.5 py-0.5">{t("skillLabel")} {agent.skill_count ?? 0}</span>
           <span className="rounded border px-1.5 py-0.5">
             {t("toolLabel")} {agent.tool_count ?? 0}
           </span>
@@ -155,7 +155,7 @@ function CreateAgentDialog({ onCreated }: { onCreated: (key: string) => void }) 
         </DialogHeader>
         <div className="grid gap-4 py-2">
           <div className="grid gap-1.5">
-            <Label htmlFor="agent-key">Key</Label>
+            <Label htmlFor="agent-key">{t("keyLabel")}</Label>
             <Input
               id="agent-key"
               placeholder={t("keyPlaceholder")}
@@ -273,3 +273,7 @@ export default function AgentsPage() {
     </div>
   );
 }
+
+// 2026-11-05: Translate the skill-count badge found in the final live walkthrough; agent identity and assignments are unchanged.
+
+// 2026-11-05: Translate the new-agent identifier field label; the submitted key and validation are unchanged.

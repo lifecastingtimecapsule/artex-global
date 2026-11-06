@@ -77,6 +77,7 @@ function fmtTime(ts: string) {
 
 export default function LogsPage() {
   const t = useTranslations("logsPage");
+  const uiText = useTranslations("uiCommon");
   const [lines, setLines] = React.useState<LogLine[]>([]);
   const [q, setQ] = React.useState("");
   const [level, setLevel] = React.useState<"all" | LogLine["level"]>("all");
@@ -203,7 +204,7 @@ export default function LogsPage() {
                 className="h-8"
                 onClick={() => setLevel(lv)}
               >
-                {lv === "all" ? t("all") : lv}
+                {lv === "all" ? t("all") : uiText(lv)}
               </Button>
             ))}
           </div>
@@ -269,3 +270,5 @@ export default function LogsPage() {
     </div>
   );
 }
+
+// 2026-11-05: Localize visible headings, placeholders and field labels from the UI walkthrough; identifiers and submitted values are preserved.

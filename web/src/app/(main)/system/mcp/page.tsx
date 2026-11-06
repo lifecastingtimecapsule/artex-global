@@ -1,5 +1,7 @@
 "use client";
 
+import { useAgentLabels } from "@/lib/agent-i18n";
+
 import * as React from "react";
 
 import { PlusIcon, RefreshCwIcon, ServerIcon, Trash2Icon } from "lucide-react";
@@ -41,6 +43,7 @@ const emptyForm: FormState = {
 
 export default function MCPPage() {
   const t = useTranslations("mcpPage");
+  const agentLabels = useAgentLabels();
   const [servers, setServers] = React.useState<MCPServer[]>([]);
   const [agents, setAgents] = React.useState<Agent[]>([]);
   const [visibility, setVisibility] = React.useState<Record<number, string[]>>({});
@@ -407,9 +410,9 @@ export default function MCPPage() {
                     <label key={a.key} className="flex items-center gap-2 text-sm">
                       <Checkbox
                         checked={(visibility[s.id] ?? []).includes(a.id)}
-                        onCheckedChange={() => toggleVisibility(s.id, a.id, a.name)}
+                        onCheckedChange={() => toggleVisibility(s.id, a.id, agentLabels.name(a))}
                       />
-                      {a.name}
+                      {agentLabels.name(a)}
                     </label>
                   ))}
                 </div>
@@ -466,3 +469,5 @@ export default function MCPPage() {
     </div>
   );
 }
+
+// 2026-11-05: Translate seeded display names and catalog summaries found by clicking the live UI; save handlers and model definitions remain unchanged.

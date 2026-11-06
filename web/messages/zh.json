@@ -1126,7 +1126,9 @@
         "toolsNone": "（未选）",
         "message": "消息：{msg}"
       }
-    }
+    },
+    "skillTab": "Skill",
+    "toolsTab": "Tools"
   },
   "assetSearch": {
     "placeholder": "DSL 搜索：domain=example AND status_code>=400",
@@ -1891,7 +1893,9 @@
     "descLabel": "描述",
     "descPlaceholder": "一句话说明这个 Agent 是干什么的",
     "create": "创建",
-    "editorDescFallback": "提示词、配置、可见资源与工具绑定"
+    "editorDescFallback": "提示词、配置、可见资源与工具绑定",
+    "skillLabel": "Skill",
+    "keyLabel": "Key"
   },
   "logsPage": {
     "title": "系统日志",
@@ -2127,7 +2131,8 @@
     "mcpSheetHint": "加载 Skill 时才披露并解锁所选 MCP 的工具。",
     "visSheetHint": "选中的 Agent 创建后即可见此 Skill。",
     "creating": "创建中…",
-    "create": "创建"
+    "create": "创建",
+    "licenseLabel": "License"
   },
   "changePasswordDialog": {
     "title": "修改密码",
@@ -3759,6 +3764,77 @@
     "retester": {
       "name": "漏洞复测",
       "description": "从漏洞详情手动启动，读取原证据并保存独立复测结论。"
+    },
+    "reporter": {
+      "name": "报告撰写",
+      "description": "查阅已登记漏洞的证据和执行过程，撰写并保存详细Markdown报告。"
     }
+  },
+  "layoutPreferences": {
+    "title": "Preferences",
+    "description": "Customize your dashboard layout preferences.",
+    "themePreset": "Theme Preset",
+    "presetPlaceholder": "Preset",
+    "fonts": "Fonts",
+    "fontPlaceholder": "Select font",
+    "themeMode": "Theme Mode",
+    "pageLayout": "Page Layout",
+    "navbarBehavior": "Navbar Behavior",
+    "sidebarStyle": "Sidebar Style",
+    "sidebarCollapseMode": "Sidebar Collapse Mode",
+    "restoreDefaults": "Restore Defaults",
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System",
+    "centered": "Centered",
+    "fullWidth": "Full Width",
+    "sticky": "Sticky",
+    "scroll": "Scroll",
+    "inset": "Inset",
+    "sidebar": "Sidebar",
+    "floating": "Floating",
+    "icon": "Icon",
+    "offcanvas": "OffCanvas",
+    "presets": {
+      "default": "Default",
+      "brutalist": "Brutalist",
+      "soft-pop": "Soft Pop",
+      "tangerine": "Tangerine"
+    }
+  },
+  "uiCommon": {
+    "close": "Close",
+    "commandTitle": "Command Palette",
+    "commandDescription": "Search for a command to run...",
+    "suggestions": "Suggestions",
+    "toggleSidebar": "Toggle Sidebar",
+    "themeCycle": "Current theme: {mode}. Click to cycle themes",
+    "themeModes": {
+      "light": "light",
+      "dark": "dark",
+      "system": "system"
+    },
+    "pagination": "pagination",
+    "previous": "Previous",
+    "next": "Next",
+    "previousPage": "Go to previous page",
+    "nextPage": "Go to next page",
+    "morePages": "More pages",
+    "originalDefinition": "Model definition (original text)",
+    "localizedSummary": "Japanese overview",
+    "license": "License",
+    "worker": "Worker",
+    "profile": "Profile",
+    "model": "Model",
+    "tokens": "Tokens",
+    "host": "host",
+    "contentType": "content-type",
+    "hostPlaceholder": "host…",
+    "key": "Key",
+    "method": "Method",
+    "compatibility": "compatibility",
+    "info": "info",
+    "warn": "warn",
+    "error": "error"
   }
 }

@@ -1126,7 +1126,9 @@
         "toolsNone": "(none selected)",
         "message": "Message: {msg}"
       }
-    }
+    },
+    "skillTab": "Skill",
+    "toolsTab": "Tools"
   },
   "assetSearch": {
     "placeholder": "DSL search: domain=example AND status_code>=400",
@@ -1891,7 +1893,9 @@
     "descLabel": "Description",
     "descPlaceholder": "Describe in one sentence what this agent does",
     "create": "Create",
-    "editorDescFallback": "Prompt, settings, exposed resources, and tool bindings"
+    "editorDescFallback": "Prompt, settings, exposed resources, and tool bindings",
+    "skillLabel": "Skill",
+    "keyLabel": "Key"
   },
   "logsPage": {
     "title": "System Logs",
@@ -2127,7 +2131,8 @@
     "mcpSheetHint": "The selected MCP's tools are exposed/unlocked only when the skill is loaded.",
     "visSheetHint": "The selected agents can see this skill right after they're created.",
     "creating": "Creating…",
-    "create": "Create"
+    "create": "Create",
+    "licenseLabel": "License"
   },
   "changePasswordDialog": {
     "title": "Change password",
@@ -3759,6 +3764,77 @@
     "retester": {
       "name": "Vulnerability Retest",
       "description": "Launched manually from a finding's detail view; reads the original evidence and saves an independent retest conclusion."
+    },
+    "reporter": {
+      "name": "Report writer",
+      "description": "Reviews recorded evidence and execution traces, then writes and saves a detailed Markdown finding report."
     }
+  },
+  "layoutPreferences": {
+    "title": "Preferences",
+    "description": "Customize your dashboard layout preferences.",
+    "themePreset": "Theme Preset",
+    "presetPlaceholder": "Preset",
+    "fonts": "Fonts",
+    "fontPlaceholder": "Select font",
+    "themeMode": "Theme Mode",
+    "pageLayout": "Page Layout",
+    "navbarBehavior": "Navbar Behavior",
+    "sidebarStyle": "Sidebar Style",
+    "sidebarCollapseMode": "Sidebar Collapse Mode",
+    "restoreDefaults": "Restore Defaults",
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System",
+    "centered": "Centered",
+    "fullWidth": "Full Width",
+    "sticky": "Sticky",
+    "scroll": "Scroll",
+    "inset": "Inset",
+    "sidebar": "Sidebar",
+    "floating": "Floating",
+    "icon": "Icon",
+    "offcanvas": "OffCanvas",
+    "presets": {
+      "default": "Default",
+      "brutalist": "Brutalist",
+      "soft-pop": "Soft Pop",
+      "tangerine": "Tangerine"
+    }
+  },
+  "uiCommon": {
+    "close": "Close",
+    "commandTitle": "Command Palette",
+    "commandDescription": "Search for a command to run...",
+    "suggestions": "Suggestions",
+    "toggleSidebar": "Toggle Sidebar",
+    "themeCycle": "Current theme: {mode}. Click to cycle themes",
+    "themeModes": {
+      "light": "light",
+      "dark": "dark",
+      "system": "system"
+    },
+    "pagination": "pagination",
+    "previous": "Previous",
+    "next": "Next",
+    "previousPage": "Go to previous page",
+    "nextPage": "Go to next page",
+    "morePages": "More pages",
+    "originalDefinition": "Model definition (original text)",
+    "localizedSummary": "Japanese overview",
+    "license": "License",
+    "worker": "Worker",
+    "profile": "Profile",
+    "model": "Model",
+    "tokens": "Tokens",
+    "host": "host",
+    "contentType": "content-type",
+    "hostPlaceholder": "host…",
+    "key": "Key",
+    "method": "Method",
+    "compatibility": "compatibility",
+    "info": "info",
+    "warn": "warn",
+    "error": "error"
   }
 }

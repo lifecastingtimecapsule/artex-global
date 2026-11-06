@@ -53,6 +53,7 @@ const CMD_MAX_LEN = 80;
 
 export default function CommandsPage() {
   const t = useTranslations("commands");
+  const uiText = useTranslations("uiCommon");
   const tp = useTranslations("pagination");
   const [page, setPage] = React.useState(0);
   const [size, setSize] = React.useState(50);
@@ -212,7 +213,7 @@ export default function CommandsPage() {
                 <TableRow>
                   <TableHead className="w-[130px]">{t("colTime")}</TableHead>
                   <TableHead className="w-[60px]">{t("colTask")}</TableHead>
-                  <TableHead className="w-[90px]">Worker</TableHead>
+                  <TableHead className="w-[90px]">{uiText("worker")}</TableHead>
                   <TableHead className="w-[110px]">{t("colTool")}</TableHead>
                   <TableHead>{t("colInput")}</TableHead>
                   <TableHead className="w-[60px]">{t("colStatus")}</TableHead>
@@ -398,3 +399,5 @@ export default function CommandsPage() {
     </div>
   );
 }
+
+// 2026-11-05: Localize visible headings, placeholders and field labels from the UI walkthrough; identifiers and submitted values are preserved.

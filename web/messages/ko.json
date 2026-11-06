@@ -1126,7 +1126,9 @@
         "toolsNone": "(선택 안 됨)",
         "message": "메시지: {msg}"
       }
-    }
+    },
+    "skillTab": "Skill",
+    "toolsTab": "Tools"
   },
   "assetSearch": {
     "placeholder": "DSL 검색: domain=example AND status_code>=400",
@@ -1891,7 +1893,9 @@
     "descLabel": "설명",
     "descPlaceholder": "이 에이전트가 무엇을 하는지 한 문장으로 설명합니다",
     "create": "만들기",
-    "editorDescFallback": "프롬프트·설정·노출 자원·도구 연결"
+    "editorDescFallback": "프롬프트·설정·노출 자원·도구 연결",
+    "skillLabel": "Skill",
+    "keyLabel": "Key"
   },
   "logsPage": {
     "title": "시스템 로그",
@@ -2127,7 +2131,8 @@
     "mcpSheetHint": "스킬을 로드할 때만 선택한 MCP 의 도구가 공개·잠금 해제됩니다.",
     "visSheetHint": "선택한 에이전트는 생성 직후 이 스킬을 볼 수 있습니다.",
     "creating": "생성 중…",
-    "create": "생성"
+    "create": "생성",
+    "licenseLabel": "License"
   },
   "changePasswordDialog": {
     "title": "비밀번호 변경",
@@ -3759,6 +3764,77 @@
     "retester": {
       "name": "취약점 재검증",
       "description": "취약점 상세에서 수동으로 시작해, 원래 증거를 읽고 독립적인 재검증 결론을 저장합니다."
+    },
+    "reporter": {
+      "name": "보고서 작성",
+      "description": "등록된 취약점의 증거와 실행 과정을 확인하고 상세 Markdown 보고서를 작성하여 저장합니다."
     }
+  },
+  "layoutPreferences": {
+    "title": "Preferences",
+    "description": "Customize your dashboard layout preferences.",
+    "themePreset": "Theme Preset",
+    "presetPlaceholder": "Preset",
+    "fonts": "Fonts",
+    "fontPlaceholder": "Select font",
+    "themeMode": "Theme Mode",
+    "pageLayout": "Page Layout",
+    "navbarBehavior": "Navbar Behavior",
+    "sidebarStyle": "Sidebar Style",
+    "sidebarCollapseMode": "Sidebar Collapse Mode",
+    "restoreDefaults": "Restore Defaults",
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System",
+    "centered": "Centered",
+    "fullWidth": "Full Width",
+    "sticky": "Sticky",
+    "scroll": "Scroll",
+    "inset": "Inset",
+    "sidebar": "Sidebar",
+    "floating": "Floating",
+    "icon": "Icon",
+    "offcanvas": "OffCanvas",
+    "presets": {
+      "default": "Default",
+      "brutalist": "Brutalist",
+      "soft-pop": "Soft Pop",
+      "tangerine": "Tangerine"
+    }
+  },
+  "uiCommon": {
+    "close": "Close",
+    "commandTitle": "Command Palette",
+    "commandDescription": "Search for a command to run...",
+    "suggestions": "Suggestions",
+    "toggleSidebar": "Toggle Sidebar",
+    "themeCycle": "Current theme: {mode}. Click to cycle themes",
+    "themeModes": {
+      "light": "light",
+      "dark": "dark",
+      "system": "system"
+    },
+    "pagination": "pagination",
+    "previous": "Previous",
+    "next": "Next",
+    "previousPage": "Go to previous page",
+    "nextPage": "Go to next page",
+    "morePages": "More pages",
+    "originalDefinition": "Model definition (original text)",
+    "localizedSummary": "Japanese overview",
+    "license": "License",
+    "worker": "Worker",
+    "profile": "Profile",
+    "model": "Model",
+    "tokens": "Tokens",
+    "host": "host",
+    "contentType": "content-type",
+    "hostPlaceholder": "host…",
+    "key": "Key",
+    "method": "Method",
+    "compatibility": "compatibility",
+    "info": "info",
+    "warn": "warn",
+    "error": "error"
   }
 }

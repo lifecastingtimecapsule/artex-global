@@ -1,5 +1,7 @@
 "use client"
 
+import { useTranslations } from "next-intl";
+
 import * as React from "react"
 import { Dialog as SheetPrimitive } from "radix-ui"
 
@@ -55,6 +57,7 @@ function SheetContent({
   side?: "top" | "right" | "bottom" | "left"
   showCloseButton?: boolean
 }) {
+  const uiText = useTranslations("uiCommon");
   return (
     <SheetPortal>
       <SheetOverlay />
@@ -77,7 +80,7 @@ function SheetContent({
             >
               <XIcon
               />
-              <span className="sr-only">Close</span>
+              <span className="sr-only">{uiText("close")}</span>
             </Button>
           </SheetPrimitive.Close>
         )}
@@ -145,3 +148,5 @@ export {
   SheetTitle,
   SheetDescription,
 }
+
+// 2026-11-05: Localize shared navigation and close labels found during actual UI review; preserve interaction behavior.

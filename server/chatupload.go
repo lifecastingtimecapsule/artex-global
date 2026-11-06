@@ -99,6 +99,12 @@ func (s *Server) chatUpload(w http.ResponseWriter, r *http.Request) {
 		writeErr(w, 400, errChatUploadParse+err.Error())
 		return
 	}
+	// 2026-11-05: Remove multipart spill files and route explicit folder paths through confined storage.
+	defer r.MultipartForm.RemoveAll()
+	if len(r.MultipartForm.Value["relative_path"]) > 0 {
+		s.uploadFolder(w, r, dir)
+		return
+	}
 	files := r.MultipartForm.File["file"]
 	if len(files) == 0 {
 		writeErr(w, 400, errChatUploadNoFile)

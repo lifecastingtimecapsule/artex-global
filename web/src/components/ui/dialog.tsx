@@ -1,5 +1,7 @@
 "use client"
 
+import { useTranslations } from "next-intl";
+
 import * as React from "react"
 import { Dialog as DialogPrimitive } from "radix-ui"
 
@@ -56,6 +58,7 @@ function DialogContent({
 }: React.ComponentProps<typeof DialogPrimitive.Content> & {
   showCloseButton?: boolean
 }) {
+  const uiText = useTranslations("uiCommon");
   return (
     <DialogPortal>
       <DialogOverlay />
@@ -89,7 +92,7 @@ function DialogContent({
             >
               <XIcon
               />
-              <span className="sr-only">Close</span>
+              <span className="sr-only">{uiText("close")}</span>
             </Button>
           </DialogPrimitive.Close>
         )}
@@ -116,6 +119,7 @@ function DialogFooter({
 }: React.ComponentProps<"div"> & {
   showCloseButton?: boolean
 }) {
+  const uiText = useTranslations("uiCommon");
   return (
     <div
       data-slot="dialog-footer"
@@ -128,7 +132,7 @@ function DialogFooter({
       {children}
       {showCloseButton && (
         <DialogPrimitive.Close asChild>
-          <Button variant="outline">Close</Button>
+          <Button variant="outline">{uiText("close")}</Button>
         </DialogPrimitive.Close>
       )}
     </div>
@@ -179,3 +183,5 @@ export {
   DialogTitle,
   DialogTrigger,
 }
+
+// 2026-11-05: Localize shared navigation and close labels found during actual UI review; preserve interaction behavior.

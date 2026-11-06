@@ -1126,7 +1126,9 @@
         "toolsNone": "(ninguna seleccionada)",
         "message": "Mensaje: {msg}"
       }
-    }
+    },
+    "skillTab": "Skill",
+    "toolsTab": "Tools"
   },
   "assetSearch": {
     "placeholder": "Búsqueda DSL: domain=example AND status_code>=400",
@@ -1891,7 +1893,9 @@
     "descLabel": "Descripción",
     "descPlaceholder": "Describa en una frase qué hace este agente",
     "create": "Crear",
-    "editorDescFallback": "Prompt, configuración, recursos expuestos y vinculaciones de herramientas"
+    "editorDescFallback": "Prompt, configuración, recursos expuestos y vinculaciones de herramientas",
+    "skillLabel": "Skill",
+    "keyLabel": "Key"
   },
   "logsPage": {
     "title": "Registros del sistema",
@@ -2127,7 +2131,8 @@
     "mcpSheetHint": "Las herramientas del MCP seleccionado se exponen/desbloquean solo cuando se carga la habilidad.",
     "visSheetHint": "Los agentes seleccionados pueden ver esta habilidad justo después de crearse.",
     "creating": "Creando…",
-    "create": "Crear"
+    "create": "Crear",
+    "licenseLabel": "License"
   },
   "changePasswordDialog": {
     "title": "Cambiar contraseña",
@@ -3759,6 +3764,77 @@
     "retester": {
       "name": "Reverificación de vulnerabilidad",
       "description": "Se inicia manualmente desde el detalle de un hallazgo; lee la evidencia original y guarda una conclusión de reverificación independiente."
+    },
+    "reporter": {
+      "name": "Redacción de informes",
+      "description": "Revisa las pruebas y la ejecución registradas y guarda un informe detallado en Markdown."
     }
+  },
+  "layoutPreferences": {
+    "title": "Preferences",
+    "description": "Customize your dashboard layout preferences.",
+    "themePreset": "Theme Preset",
+    "presetPlaceholder": "Preset",
+    "fonts": "Fonts",
+    "fontPlaceholder": "Select font",
+    "themeMode": "Theme Mode",
+    "pageLayout": "Page Layout",
+    "navbarBehavior": "Navbar Behavior",
+    "sidebarStyle": "Sidebar Style",
+    "sidebarCollapseMode": "Sidebar Collapse Mode",
+    "restoreDefaults": "Restore Defaults",
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System",
+    "centered": "Centered",
+    "fullWidth": "Full Width",
+    "sticky": "Sticky",
+    "scroll": "Scroll",
+    "inset": "Inset",
+    "sidebar": "Sidebar",
+    "floating": "Floating",
+    "icon": "Icon",
+    "offcanvas": "OffCanvas",
+    "presets": {
+      "default": "Default",
+      "brutalist": "Brutalist",
+      "soft-pop": "Soft Pop",
+      "tangerine": "Tangerine"
+    }
+  },
+  "uiCommon": {
+    "close": "Close",
+    "commandTitle": "Command Palette",
+    "commandDescription": "Search for a command to run...",
+    "suggestions": "Suggestions",
+    "toggleSidebar": "Toggle Sidebar",
+    "themeCycle": "Current theme: {mode}. Click to cycle themes",
+    "themeModes": {
+      "light": "light",
+      "dark": "dark",
+      "system": "system"
+    },
+    "pagination": "pagination",
+    "previous": "Previous",
+    "next": "Next",
+    "previousPage": "Go to previous page",
+    "nextPage": "Go to next page",
+    "morePages": "More pages",
+    "originalDefinition": "Model definition (original text)",
+    "localizedSummary": "Japanese overview",
+    "license": "License",
+    "worker": "Worker",
+    "profile": "Profile",
+    "model": "Model",
+    "tokens": "Tokens",
+    "host": "host",
+    "contentType": "content-type",
+    "hostPlaceholder": "host…",
+    "key": "Key",
+    "method": "Method",
+    "compatibility": "compatibility",
+    "info": "info",
+    "warn": "warn",
+    "error": "error"
   }
 }

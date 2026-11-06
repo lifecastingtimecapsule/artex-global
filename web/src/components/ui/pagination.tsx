@@ -1,3 +1,6 @@
+"use client";
+
+import { useTranslations } from "next-intl";
 import * as React from "react"
 
 import { cn } from "@/lib/utils"
@@ -5,10 +8,11 @@ import { Button } from "@/components/ui/button"
 import { ChevronLeftIcon, ChevronRightIcon, MoreHorizontalIcon } from "lucide-react"
 
 function Pagination({ className, ...props }: React.ComponentProps<"nav">) {
+  const uiText = useTranslations("uiCommon");
   return (
     <nav
       role="navigation"
-      aria-label="pagination"
+      aria-label={uiText("pagination")}
       data-slot="pagination"
       className={cn("mx-auto flex w-full justify-center", className)}
       {...props}
@@ -63,35 +67,37 @@ function PaginationLink({
 
 function PaginationPrevious({
   className,
-  text = "Previous",
+  text,
   ...props
 }: React.ComponentProps<typeof PaginationLink> & { text?: string }) {
+  const uiText = useTranslations("uiCommon");
   return (
     <PaginationLink
-      aria-label="Go to previous page"
+      aria-label={uiText("previousPage")}
       size="default"
       className={cn("pl-1.5!", className)}
       {...props}
     >
       <ChevronLeftIcon data-icon="inline-start" />
-      <span className="hidden sm:block">{text}</span>
+      <span className="hidden sm:block">{text ?? uiText("previous")}</span>
     </PaginationLink>
   )
 }
 
 function PaginationNext({
   className,
-  text = "Next",
+  text,
   ...props
 }: React.ComponentProps<typeof PaginationLink> & { text?: string }) {
+  const uiText = useTranslations("uiCommon");
   return (
     <PaginationLink
-      aria-label="Go to next page"
+      aria-label={uiText("nextPage")}
       size="default"
       className={cn("pr-1.5!", className)}
       {...props}
     >
-      <span className="hidden sm:block">{text}</span>
+      <span className="hidden sm:block">{text ?? uiText("next")}</span>
       <ChevronRightIcon data-icon="inline-end" />
     </PaginationLink>
   )
@@ -101,6 +107,7 @@ function PaginationEllipsis({
   className,
   ...props
 }: React.ComponentProps<"span">) {
+  const uiText = useTranslations("uiCommon");
   return (
     <span
       aria-hidden
@@ -113,7 +120,7 @@ function PaginationEllipsis({
     >
       <MoreHorizontalIcon
       />
-      <span className="sr-only">More pages</span>
+      <span className="sr-only">{uiText("morePages")}</span>
     </span>
   )
 }
@@ -127,3 +134,5 @@ export {
   PaginationNext,
   PaginationPrevious,
 }
+
+// 2026-11-05: Localize shared navigation and close labels found during actual UI review; preserve interaction behavior.

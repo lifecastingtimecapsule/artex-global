@@ -1,5 +1,9 @@
 "use client";
 
+import { useReviewedDisplayLabels } from "@/lib/ui-review-i18n";
+
+import { useAgentLabels } from "@/lib/agent-i18n";
+
 import * as React from "react";
 
 import {
@@ -149,6 +153,9 @@ function SkillsOverview({
   onSelect: (name: string) => void;
 }) {
   const t = useTranslations("skillsPage");
+  const uiText = useTranslations("uiCommon");
+  const agentLabels = useAgentLabels();
+  const displayLabels = useReviewedDisplayLabels();
   const agg = React.useMemo(() => {
     const totalCalls = skills.reduce((n, s) => n + s.calls, 0);
     const used = skills.filter((s) => s.calls > 0);
@@ -303,6 +310,9 @@ function SkillsOverview({
 // ── Page ──────────────────────────────────────────────────────────────────
 export default function SkillsPage() {
   const t = useTranslations("skillsPage");
+  const uiText = useTranslations("uiCommon");
+  const agentLabels = useAgentLabels();
+  const displayLabels = useReviewedDisplayLabels();
   const [skills, setSkills] = React.useState<SkillItem[]>([]);
   const [agents, setAgents] = React.useState<Agent[]>([]);
   const [selected, setSelected] = React.useState<Selected | null>(null);
@@ -1016,12 +1026,12 @@ export default function SkillsPage() {
               <div>
                 <h2 className="font-mono text-base font-semibold">{selectedSkill.name}</h2>
                 {selectedSkill.description && (
-                  <p className="mt-1 text-sm text-muted-foreground">{selectedSkill.description}</p>
+                  <p className="mt-1 text-sm text-muted-foreground">{displayLabels.skillDescription(selectedSkill.name, selectedSkill.description)}</p>
                 )}
                 <div className="mt-2 flex flex-wrap gap-2">
                   {selectedSkill.license && (
                     <Badge variant="outline" className="text-xs font-normal">
-                      License: {selectedSkill.license}
+                      {t("licenseLabel")}: {selectedSkill.license}
                     </Badge>
                   )}
                   {selectedSkill.compatibility && (
@@ -1130,9 +1140,9 @@ export default function SkillsPage() {
                         <label key={a.key} className="flex cursor-pointer items-center gap-2 text-sm">
                           <Checkbox
                             checked={(visibility[selectedSkill.name] ?? []).includes(a.id)}
-                            onCheckedChange={() => toggleVisibility(selectedSkill.name, a.id, a.name)}
+                            onCheckedChange={() => toggleVisibility(selectedSkill.name, a.id, agentLabels.name(a))}
                           />
-                          {a.name}
+                          {agentLabels.name(a)}
                         </label>
                       ))}
                       {agents.length === 0 && <span className="text-xs text-muted-foreground">{t("noAgents")}</span>}
@@ -1266,7 +1276,7 @@ export default function SkillsPage() {
               </div>
               <div className="grid grid-cols-2 gap-3">
                 <div className="grid gap-1.5">
-                  <Label className="text-muted-foreground text-xs">license</Label>
+                  <Label className="text-muted-foreground text-xs">{uiText("license")}</Label>
                   <Input
                     placeholder="MIT / Proprietary"
                     value={newLicense}
@@ -1274,7 +1284,7 @@ export default function SkillsPage() {
                   />
                 </div>
                 <div className="grid gap-1.5">
-                  <Label className="text-muted-foreground text-xs">compatibility</Label>
+                  <Label className="text-muted-foreground text-xs">{uiText("compatibility")}</Label>
                   <Input
                     placeholder={t("compatPlaceholder")}
                     value={newCompat}
@@ -1333,7 +1343,7 @@ export default function SkillsPage() {
                           setNewVisibility((cur) => (on ? [...cur, a.id] : cur.filter((id) => id !== a.id)))
                         }
                       />
-                      {a.name}
+                      {agentLabels.name(a)}
                     </label>
                   ))}
                 </div>
@@ -1354,3 +1364,9 @@ export default function SkillsPage() {
     </div>
   );
 }
+
+// 2026-11-05: Translate seeded display names and catalog summaries found by clicking the live UI; save handlers and model definitions remain unchanged.
+
+// 2026-11-05: Localize visible headings, placeholders and field labels from the UI walkthrough; identifiers and submitted values are preserved.
+
+// 2026-11-05: Use the translated agent name in visibility-result messages as well as checkbox labels; identifiers and permissions are unchanged.
